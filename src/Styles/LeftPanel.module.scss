@@ -1,10 +1,52 @@
-.main{
-  width: 20%;
+.main {
+  width: 18%;
   height: 100%;
   position: relative;
   z-index: 100;
+  transition: all 0.3s ease-in-out;
 
-  .nav{
+  &.closed {
+    width: 80px; // Уменьшаем ширину только для иконок
+
+    .nav {
+      width: 80px;
+      padding-left: 15px;
+      align-items: center;
+
+      .upicon {
+        gap: 10px;
+        justify-content: center;
+        flex-direction: column;
+        height: 120px;
+
+        img {
+          width: 40px;
+          height: 35px;
+        }
+      }
+
+      .function {
+        align-items: center;
+
+        div {
+          justify-content: center;
+        }
+      }
+
+      .glassicon {
+        width: 40px;
+        height: 40px;
+
+        .glassimg,
+        .glassimg1 {
+          width: 20px;
+          height: 18px;
+        }
+      }
+    }
+  }
+
+  .nav {
     width: 100%;
     height: 100vh;
     background: rgba(255, 255, 255, 0.1);
@@ -14,46 +56,53 @@
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding-left: 50px;
     color: white;
-    .function{
-      display:flex;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+
+    .function {
+      display: flex;
       flex-direction: column;
       gap: 15px;
-      div{
+
+      div {
         display: flex;
         flex-direction: row;
         gap: 10px;
         align-items: center;
       }
     }
-    .chats{
+
+    .chats {
       display: flex;
       flex-direction: column;
       height: fit-content;
-      padding-top:30px ;
+      padding-top: 30px;
       gap: 20px;
       width: 320px;
 
-      div{
+      div {
         display: flex;
         flex-direction: column;
         gap: 10px;
-
 
         h2 {
           width: 100%;
           white-space: nowrap;
           overflow: hidden;
-
           margin: 0;
           padding: 5px 0;
         }
       }
     }
-    img{
+
+    img {
       width: 30px;
       height: 26px;
+      transition: all 0.3s ease-in-out;
     }
-    .glassicon{
+
+    .glassicon {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -65,11 +114,15 @@
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       box-shadow: 8px 0 32px 0 rgba(31, 38, 135, 0.37);
-      .glassimg{
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+
+      .glassimg {
         width: 30px;
         height: 26px;
       }
-      .glassimg1{
+
+      .glassimg1 {
         width: 30px;
         height: 30px;
       }
@@ -77,9 +130,10 @@
 
     .specialGlassicon {
       position: relative;
+      z-index: 10;
 
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -91,7 +145,7 @@
       }
 
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 0;
         right: 0;
@@ -102,11 +156,12 @@
         border-radius: 0 0 3px 0;
       }
     }
+
     .specialGlassiconSides {
       position: relative;
 
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -117,7 +172,7 @@
       }
 
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         right: 0;
@@ -128,18 +183,18 @@
       }
     }
 
-    .upicon{
+    .upicon {
       display: flex;
       flex-direction: row;
       gap: 200px;
       height: 150px;
-
       align-items: center;
-      img{
+      transition: all 0.3s ease-in-out;
+
+      img {
         width: 70px;
         height: 70px;
       }
     }
   }
-
 }

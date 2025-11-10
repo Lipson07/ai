@@ -1,24 +1,52 @@
-.profilepanel{
+.profilepanel {
   width: 100%;
   height: 400px;
   position: absolute;
   display: flex;
- align-items: end;
-  .profdiv{
+  align-items: end;
+  top: 500px;
+  transition: all 0.3s ease-in-out;
+
+  &.closed {
+    width: 60px;
+    justify-content: center;
+    left: 10px;
+
+    .profdiv {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      justify-content: center;
+      margin-left: 0;
+      padding: 0;
+
+      .glassdiv {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      h1 {
+        display: none;
+      }
+    }
+  }
+
+  .profdiv {
     display: flex;
     flex-direction: row;
     width: 300px;
     height: 60px;
     align-items: center;
     border-radius: 30px;
-
     gap: 10px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-right: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    .glassdiv{
+    transition: all 0.3s ease-in-out;
+
+    .glassdiv {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
@@ -31,6 +59,11 @@
       justify-content: center;
       align-items: center;
       margin-left: 10px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    h1 {
+      transition: all 0.3s ease-in-out;
     }
   }
 }

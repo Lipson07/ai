@@ -12,14 +12,15 @@ function MainPage(props) {
   const [clickplus, setClickplus] = useState(false);
   const [valinp, setValinp] = useState("");
   const [messages, setMessages] = useState<
-    Array<{ text: string; isUser: boolean }>
+    Array<{ text: string; isUser: boolean; image?: File }>
   >([]);
   const [isTextVisible, setIsTextVisible] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   const inp = useRef(null);
   const name = useRef(null);
   const messagesEndRef = useRef(null);
-
+  const fileInputRef = useRef(null);
   const messagesContainerRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -33,17 +34,49 @@ function MainPage(props) {
     scrollToBottom();
   }, [messages]);
 
+  // Обработчик выбора файла
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Проверяем тип файла
+      if (file.type.startsWith("image/")) {
+        setSelectedImage(file);
+        setValinp((prev) => prev || "Что на этом изображении?");
+        setClickplus(false); // Закрываем меню после выбора
+      } else {
+        alert("Пожалуйста, выберите файл изображения (JPEG, PNG, GIF)");
+      }
+    }
+  };
+
+  // Функция для открытия диалога выбора файла
+  const handleAddPhotoClick = () => {
+    fileInputRef.current?.click();
+  };
+
   const handleSendMessage = async () => {
-    if (!valinp.trim()) return;
+    if (!valinp.trim() && !selectedImage) return;
 
-    const userMessage = valinp;
+    const userMessage = valinp || "Проанализируй это изображение";
+
+    // Добавляем сообщение пользователя
+    setMessages((prev) => [
+      ...prev,
+      {
+        text: userMessage,
+        isUser: true,
+        image: selectedImage || undefined,
+      },
+    ]);
+
     setValinp("");
-
-    setMessages((prev) => [...prev, { text: userMessage, isUser: true }]);
     setIsTextVisible(true);
 
     try {
-      const response = await ApiService.sendMessage(userMessage);
+      const response = await ApiService.sendMessage(
+        userMessage,
+        selectedImage || undefined
+      );
       console.log("Ответ от API:", response);
 
       if (response) {
@@ -60,6 +93,9 @@ function MainPage(props) {
         ...prev,
         { text: "Произошла ошибка при отправке запроса", isUser: false },
       ]);
+    } finally {
+      // Очищаем выбранное изображение после отправки
+      setSelectedImage(null);
     }
   };
 
@@ -92,6 +128,11 @@ function MainPage(props) {
     }
   };
 
+  // Функция для отображения превью изображения
+  const renderImagePreview = (file: File) => {
+    return URL.createObjectURL(file);
+  };
+
   return (
     <>
       <div className={style.main}>
@@ -103,15 +144,35 @@ function MainPage(props) {
             </h1>
             <div className={style.messagesContainer} ref={messagesContainerRef}>
               {messages.map((message, index) => (
-                <TextDisplay
-                  key={index}
-                  text={message.text}
-                  isVisible={true}
-                  isUser={message.isUser}
-                />
+                <div key={index}>
+                  {message.image && (
+                    <div className={style.imagePreview}>
+                      <img
+                        src={renderImagePreview(message.image)}
+                        alt="Загруженное изображение"
+                        className={style.previewImage}
+                      />
+                    </div>
+                  )}
+                  <TextDisplay
+                    text={message.text}
+                    isVisible={true}
+                    isUser={message.isUser}
+                  />
+                </div>
               ))}
               <div ref={messagesEndRef} />
             </div>
+
+            {/* Скрытый input для выбора файла */}
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileSelect}
+              accept="image/*"
+              style={{ display: "none" }}
+            />
+
             <div className={style.divinput} ref={inp}>
               <div
                 className={`${style.glassCircle} ${style.leftCircle} ${
@@ -122,7 +183,10 @@ function MainPage(props) {
                 }}
               >
                 {clickplus ? (
-                  <div className={style.photoOptions}>
+                  <div
+                    className={style.photoOptions}
+                    onClick={handleAddPhotoClick}
+                  >
                     <p>Добавить фото</p>
                   </div>
                 ) : (
@@ -146,12 +210,23 @@ function MainPage(props) {
               </div>
 
               <input
-                placeholder="Введите запрос..."
+                placeholder={
+                  selectedImage
+                    ? "Изображение загружено. Введите запрос..."
+                    : "Введите запрос..."
+                }
                 className={clickplus ? style.expandedInput : ""}
                 value={valinp}
                 onChange={(e) => setValinp(e.target.value)}
                 onKeyPress={handleKeyPress}
               />
+
+              {/* Индикатор загруженного изображения */}
+              {selectedImage && (
+                <div className={style.imageIndicator}>
+                  <span>📷</span>
+                </div>
+              )}
 
               <div
                 className={`${style.glassCircle} ${style.rightCircle}`}
