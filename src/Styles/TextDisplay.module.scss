@@ -1,70 +1,62 @@
-// TextDisplay.module.scss
 .textDisplay {
-    margin: 10px 0;
-    padding: 15px 20px;
-    border-radius: 15px;
-    max-width: 100%;
-    width: 100%;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s ease forwards;
+  margin: 10px 0;
+  padding: 15px 20px;
+  border-radius: 15px;
+  max-width: 100%;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards;
 }
 
 .userMessage {
-    background: rgba(255, 255, 255, 0.1); // Фон для пользовательских сообщений
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    align-self: flex-end;
-    margin-left: auto;
-    max-width: 80%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  align-self: flex-end;
+  margin-left: auto;
+  max-width: 80%;
 }
 
 .aiMessage {
-    background: transparent; // Без фона для AI
-    align-self: flex-start;
-    margin-right: auto;
-    max-width: 80%;
+  background: transparent;
+  align-self: flex-start;
+  margin-right: auto;
+  max-width: 80%;
 }
 
 .textContent {
-    color: white;
-    font-size: 16px;
-    line-height: 1.5;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+  color: white;
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .cursor {
-    animation: blink 1s infinite;
-    color: #fff;
-    font-weight: bold;
-}
-
-.messagesContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 20px;
+  animation: blink 1s infinite;
+  color: #fff;
+  font-weight: bold;
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes blink {
-    0%, 50% {
-        opacity: 1;
-    }
-    51%, 100% {
-        opacity: 0;
-    }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
